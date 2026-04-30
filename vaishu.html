@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Vaishu 🌹</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            /* Premium Pink & Violet Gradient */
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: white;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 25px;
+            width: 90%;
+            max-width: 380px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 5;
+        }
+
+        .step { display: none; animation: slideUp 0.5s ease forwards; }
+        .step.active { display: block; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 { font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin-bottom: 10px; color: #fff; }
+        p { font-size: 1rem; line-height: 1.6; margin-bottom: 20px; color: #ffe0e9; }
+
+        /* Slideshow Styling */
+        .slideshow {
+            width: 100%;
+            height: 220px;
+            border-radius: 6%;
+            overflow: hidden;
+            margin: 15px 0;
+            border: 3px solid rgba(200, 255, 255, 0.5);
+            position: relative;
+        }
+
+        .slideshow img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slideshow img.active { opacity: 1; }
+
+        /* Buttons */
+        button {
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+            width: 100%;
+        }
+
+        button:active { transform: scale(0.95); }
+
+        .proposal-btns {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            height: 60px;
+            position: relative;
+        }
+
+        #noBtn {
+            background: #444;
+            position: absolute;
+            width: 100px;
+            transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #yesBtn { width: 120px; }
+
+        /* Floating Roses background effect */
+        .rose-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0; left: 0;
+            pointer-events: none;
+        }
+
+        /* Responsive Fixes */
+        @media (max-height: 600px) {
+            .glass-card { padding: 15px; }
+            h1 { font-size: 2rem; }
+            .slideshow { height: 180px; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="majboor.mp4" type="audio/mpeg">
+    </audio>
+
+    <div class="glass-card">
+        <div class="step active" id="step1">
+            <h1>Hey Vaishu Maharani.. 🌹</h1>
+            <p>Maine kuch bohot special banaya hai tere liye. Screen touch karo start karne ke liye!</p>
+            <button onclick="startApp()">Unlock Surprise ✨</button>
+        </div>
+
+        <div class="step" id="step2">
+            <h1>Suno... 🙄</h1>
+            <p>"Vaishu, usko chhod na yaar, kab tak normal life jiyegi? Mere saath aa, thoda adventure aur thoda zyada pyaar milega. Vaise bhi tere nakhre mere se accha aur koi nahi jhel payega. So, meri favorite headache banegi? ❤️😉"</p>
+            <button onclick="goNext(2, 3)">Agreed? Hehe Next! ➡️</button>
+        </div>
+
+        <div class="step" id="step3">
+            <h1>Looking Beautiful! 😍</h1>
+            <div class="slideshow">
+                <img src="vaishu 1.jpg" class="active">
+                <img src="vaishu 2 .jpeg">
+                <img src="vaishu 3 .JPG">
+            </div>
+            <p>Ye smile hamesha rakhna, but sirf mere liye!</p>
+            <button onclick="goNext(3, 4)">Click for Final Question 🥺</button>
+        </div>
+
+        <div class="step" id="step4">
+            <h1>Will you be my girl? ❤️</h1>
+            <p>Choices tere paas hain (actually nahi hain LOL)</p>
+            <div class="proposal-btns">
+                <button id="yesBtn" onclick="celebrate()">YES! 🥰</button>
+                <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()">NO 😒</button>
+            </div>
+        </div>
+
+        <div class="step" id="step5">
+            <h1>I Love You! ❤️🎉</h1>
+            <p>Best decision of your life! Taiyar ho ja ab mere nakhre jhelne ke liye. 🌹✨</p>
+        </div>
+    </div>
+
+    <script>
+        // Start App and Music
+        function startApp() {
+            document.getElementById('bgMusic').play().catch(() => {
+                console.log("Audio block bypass required");
+            });
+            goNext(1, 2);
+        }
+
+        // Navigation
+        function goNext(curr, next) {
+            document.getElementById('step' + curr).classList.remove('active');
+            document.getElementById('step' + next).classList.add('active');
+            
+            if(next === 3) startSlideshow();
+        }
+
+        // Slideshow Logic
+        function startSlideshow() {
+            let images = document.querySelectorAll('.slideshow img');
+            let i = 0;
+            setInterval(() => {
+                images[i].classList.remove('active');
+                i = (i + 1) % images.length;
+                images[i].classList.add('active');
+            }, 2500);
+        }
+
+        // Irritating NO Button Logic
+        function moveNo() {
+            const btn = document.getElementById('noBtn');
+            // Random position within the mobile viewport
+            const maxX = window.innerWidth - btn.offsetWidth - 20;
+            const maxY = window.innerHeight - btn.offsetHeight - 20;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            btn.style.position = 'fixed';
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+        }
+
+        // Success Celebration
+        function celebrate() {
+            goNext(4, 5);
+            // Fire Confetti
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+              return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+              var timeLeft = animationEnd - Date.now();
+              if (timeLeft <= 0) return clearInterval(interval);
+
+              var particleCount = 50 * (timeLeft / duration);
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+    </script>
+</body>
+</html>
